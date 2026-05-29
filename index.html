@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rozen Family · Portugal Summer 2026</title>
+<meta name="description" content="The Rozen family Portugal road trip — July 30 to August 10, 2026. Castles, beaches, the Algarve, Évora and Lisbon." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+<style>
+  :root {
+    --azul: #1d4ed8;
+    --azul-deep: #1e3a8a;
+    --azul-light: #dbeafe;
+    --tile: #2563eb;
+    --ochre: #c2410c;
+    --ochre-soft: #fb923c;
+    --gold: #b45309;
+    --sand: #fef7ed;
+    --cream: #fffbf5;
+    --terracotta: #b91c1c;
+    --olive: #4d7c0f;
+    --teal: #0f766e;
+    --ink: #0c0a09;
+    --slate: #44403c;
+    --muted: #78716c;
+    --line: #e7e5e4;
+    --paper: #ffffff;
+    --shadow-sm: 0 1px 2px rgba(12,10,9,.06), 0 1px 3px rgba(12,10,9,.08);
+    --shadow-md: 0 4px 12px rgba(12,10,9,.08), 0 10px 30px rgba(12,10,9,.06);
+    --shadow-lg: 0 18px 60px rgba(12,10,9,.15);
+    --r: 14px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+    background: var(--cream);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4 { font-family: 'Fraunces', Georgia, serif; font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; margin: 0; }
+  h2 { font-size: clamp(2rem, 4vw, 3rem); }
+  h3 { font-size: clamp(1.4rem, 2.4vw, 1.8rem); font-weight: 600; }
+  h4 { font-size: 1.15rem; font-weight: 600; }
+  p { margin: 0 0 1em; color: var(--slate); }
+  a { color: var(--azul); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  img { max-width: 100%; display: block; }
+
+  /* ===== Nav ===== */
+  nav.top {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(255,251,245,.85);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav.top .wrap {
+    max-width: 1240px; margin: 0 auto; padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  }
+  nav.top .brand {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.05rem; color: var(--ink);
+  }
+  nav.top .brand .dot { width: 10px; height: 10px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--ochre), var(--terracotta)); display: inline-block; }
+  nav.top ul {
+    display: flex; gap: 4px; list-style: none; padding: 0; margin: 0;
+    overflow-x: auto;
+  }
+  nav.top ul a {
+    display: inline-block; padding: 8px 14px; border-radius: 999px;
+    color: var(--slate); font-size: .9rem; font-weight: 500; white-space: nowrap;
+    transition: background .15s, color .15s;
+  }
+  nav.top ul a:hover { background: var(--azul-light); color: var(--azul-deep); text-decoration: none; }
+
+  /* ===== Hero ===== */
+  .hero {
+    position: relative; min-height: 92vh; display: flex; align-items: flex-end;
+    padding: 120px 24px 64px; overflow: hidden; color: #fff;
+    background:
+      linear-gradient(180deg, rgba(15,23,42,0) 0%, rgba(15,23,42,.3) 55%, rgba(15,23,42,.85) 100%),
+      linear-gradient(135deg, #1e3a8a 0%, #b45309 100%);
+  }
+  .hero .bg {
+    position: absolute; inset: 0; z-index: -1;
+    background-image: url('https://commons.wikimedia.org/wiki/Special:FilePath/Pena_Palace_atop_a_hill_in_the_Sintra_Mountains.jpg?width=2000');
+    background-size: cover; background-position: center 60%;
+    filter: saturate(110%);
+  }
+  .hero .wrap { max-width: 1240px; margin: 0 auto; width: 100%; position: relative; z-index: 2; }
+  .hero .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: .82rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+    background: rgba(255,255,255,.15); padding: 8px 16px; border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.25); margin-bottom: 20px; backdrop-filter: blur(8px);
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif; font-weight: 700;
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    line-height: 1; margin-bottom: 18px;
+    text-shadow: 0 2px 30px rgba(0,0,0,.4);
+  }
+  .hero h1 em { font-style: italic; color: var(--ochre-soft); font-weight: 500; }
+  .hero .sub { font-size: 1.2rem; max-width: 620px; color: rgba(255,255,255,.92); }
+  .hero .pills {
+    display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px;
+  }
+  .hero .pill {
+    background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25);
+    padding: 10px 18px; border-radius: 999px; font-size: .9rem; backdrop-filter: blur(8px);
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .hero .pill svg { width: 16px; height: 16px; }
+
+  /* ===== Container & sections ===== */
+  section { padding: 100px 24px; }
+  .wrap { max-width: 1240px; margin: 0 auto; }
+  .section-head { margin-bottom: 56px; max-width: 760px; }
+  .section-head .kicker {
+    display: inline-block; font-size: .78rem; font-weight: 700; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--ochre); margin-bottom: 14px;
+  }
+  .section-head h2 { color: var(--ink); margin-bottom: 14px; }
+  .section-head p { font-size: 1.1rem; color: var(--muted); }
+
+  /* ===== Glance stats ===== */
+  #glance { padding: 80px 24px; background: var(--paper); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 24px; }
+  .stat { padding: 24px; border-radius: var(--r); background: var(--cream); border: 1px solid var(--line); }
+  .stat .label { font-size: .78rem; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .stat .value { font-family: 'Fraunces', serif; font-size: 2rem; color: var(--ink); margin-top: 6px; line-height: 1.1; }
+  .stat .note { font-size: .85rem; color: var(--muted); margin-top: 4px; }
+
+  /* ===== Flight card ===== */
+  #flights { background: var(--cream); }
+  .flight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  @media (max-width: 800px) { .flight-grid { grid-template-columns: 1fr; } }
+  .flight {
+    background: var(--paper); border-radius: var(--r); padding: 32px;
+    border: 1px solid var(--line); box-shadow: var(--shadow-sm);
+    position: relative; overflow: hidden;
+  }
+  .flight::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--azul), var(--ochre));
+  }
+  .flight .label {
+    font-size: .75rem; letter-spacing: .18em; text-transform: uppercase;
+    font-weight: 700; color: var(--ochre); margin-bottom: 8px;
+  }
+  .flight .route {
+    display: flex; align-items: center; gap: 16px; margin: 18px 0;
+  }
+  .flight .airport {
+    flex: 1;
+  }
+  .flight .airport .code { font-family: 'Fraunces', serif; font-size: 2.5rem; font-weight: 700; color: var(--ink); line-height: 1; }
+  .flight .airport .city { font-size: .9rem; color: var(--muted); margin-top: 4px; }
+  .flight .arrow {
+    flex: 0 0 auto; color: var(--ochre); font-size: 1.5rem;
+  }
+  .flight .meta {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+    margin-top: 22px; padding-top: 22px; border-top: 1px dashed var(--line);
+  }
+  .flight .meta div .k { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; font-weight: 600; }
+  .flight .meta div .v { font-weight: 600; color: var(--ink); margin-top: 2px; font-size: .95rem; }
+  .booking-strip {
+    margin-top: 28px; padding: 18px 22px; background: linear-gradient(135deg, var(--azul-light), #fff);
+    border-radius: var(--r); border: 1px solid var(--line);
+    display: flex; flex-wrap: wrap; gap: 18px 32px; align-items: center; justify-content: space-between;
+  }
+  .booking-strip .item .k { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; font-weight: 600; }
+  .booking-strip .item .v { font-family: 'JetBrains Mono', ui-monospace, monospace; color: var(--azul-deep); font-weight: 600; margin-top: 2px; }
+  .alert {
+    margin-top: 20px; padding: 16px 20px; background: #fffbeb; border-left: 4px solid var(--ochre);
+    border-radius: 8px; font-size: .92rem; color: var(--slate);
+  }
+  .alert strong { color: var(--ochre); }
+
+  /* ===== Route ===== */
+  #route { background: var(--paper); }
+  .route-track {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
+    margin-top: 30px; position: relative;
+  }
+  @media (max-width: 900px) { .route-track { grid-template-columns: 1fr; } }
+  .route-step {
+    background: var(--cream); border: 1px solid var(--line);
+    border-radius: var(--r); padding: 24px; position: relative;
+  }
+  .route-step .num {
+    display: inline-flex; width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--azul), var(--azul-deep)); color: #fff;
+    align-items: center; justify-content: center; font-weight: 700; font-size: .9rem;
+    margin-bottom: 12px;
+  }
+  .route-step h4 { color: var(--ink); margin-bottom: 4px; }
+  .route-step .nights { font-size: .8rem; color: var(--ochre); font-weight: 600; text-transform: uppercase; letter-spacing: .1em; }
+  .route-step .drive { font-size: .82rem; color: var(--muted); margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--line); }
+  .route-step .drive svg { width: 12px; height: 12px; display: inline-block; vertical-align: middle; margin-right: 4px; }
+
+  /* ===== Hotels ===== */
+  #hotels { background: var(--cream); }
+  .hotels-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+  @media (max-width: 900px) { .hotels-grid { grid-template-columns: 1fr; } }
+  .hotel {
+    background: var(--paper); border-radius: var(--r); overflow: hidden;
+    border: 1px solid var(--line); box-shadow: var(--shadow-sm);
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .hotel:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+  .hotel .photo {
+    aspect-ratio: 16/10; background-size: cover; background-position: center;
+    background-color: #1e3a8a;
+    position: relative;
+    transition: background-image .3s ease;
+  }
+  .hotel .photo .nights-badge {
+    position: absolute; top: 16px; left: 16px;
+    background: rgba(255,255,255,.95); color: var(--ink); padding: 6px 12px;
+    border-radius: 999px; font-size: .8rem; font-weight: 700;
+    box-shadow: var(--shadow-sm);
+  }
+  .hotel .photo .status-badge {
+    position: absolute; top: 16px; right: 16px;
+    background: var(--olive); color: #fff; padding: 6px 12px;
+    border-radius: 999px; font-size: .75rem; font-weight: 700;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .hotel .thumbs {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+    padding: 12px 12px 0; background: var(--paper);
+  }
+  .hotel .thumb {
+    aspect-ratio: 1/1; background-size: cover; background-position: center;
+    border-radius: 8px; cursor: pointer; position: relative;
+    border: 2px solid transparent;
+    transition: border-color .15s, transform .15s;
+    background-color: #1e3a8a;
+  }
+  .hotel .thumb:hover { transform: translateY(-2px); }
+  .hotel .thumb.active { border-color: var(--azul); }
+  .hotel .thumb .caption {
+    position: absolute; inset: 0; display: flex; align-items: flex-end;
+    padding: 4px 6px; font-size: .65rem; color: #fff; font-weight: 600;
+    background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,.7) 100%);
+    border-radius: 6px; opacity: 0; transition: opacity .15s;
+    line-height: 1.1;
+  }
+  .hotel .thumb:hover .caption { opacity: 1; }
+  .hotel .body { padding: 26px 28px 28px; }
+  .hotel .body .place {
+    font-size: .78rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--ochre); font-weight: 700; margin-bottom: 6px;
+  }
+  .hotel h3 { color: var(--ink); margin-bottom: 10px; }
+  .hotel .desc { color: var(--slate); font-size: .98rem; }
+  .hotel .meta-row {
+    margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    font-size: .88rem;
+  }
+  .hotel .meta-row .k { color: var(--muted); font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; font-weight: 600; }
+  .hotel .meta-row .v { color: var(--ink); font-weight: 600; margin-top: 2px; }
+
+  /* ===== Itinerary ===== */
+  #itinerary { background: var(--paper); }
+  .timeline { position: relative; padding-left: 0; }
+  .stop-block {
+    margin-bottom: 56px;
+  }
+  .stop-header {
+    background: linear-gradient(135deg, var(--azul-deep), var(--azul));
+    color: #fff; padding: 28px 32px; border-radius: var(--r);
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;
+    margin-bottom: 24px;
+    position: relative; overflow: hidden;
+  }
+  .stop-header::after {
+    content: ''; position: absolute; right: -20px; top: -20px; width: 140px; height: 140px;
+    background: rgba(255,255,255,.06); border-radius: 50%;
+  }
+  .stop-header .meta-left { flex: 1; min-width: 260px; }
+  .stop-header .kick { font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; opacity: .8; font-weight: 600; }
+  .stop-header h3 { color: #fff; margin-top: 6px; }
+  .stop-header .dates { font-size: .95rem; opacity: .9; margin-top: 6px; }
+  .stop-header .badge {
+    background: rgba(255,255,255,.18); padding: 8px 16px; border-radius: 999px;
+    font-size: .85rem; font-weight: 600; border: 1px solid rgba(255,255,255,.25);
+  }
+
+  details.day {
+    background: var(--cream); border: 1px solid var(--line);
+    border-radius: var(--r); margin-bottom: 12px; overflow: hidden;
+    transition: box-shadow .2s;
+  }
+  details.day[open] { box-shadow: var(--shadow-sm); border-color: var(--azul); }
+  details.day summary {
+    list-style: none; cursor: pointer;
+    padding: 20px 24px; display: flex; align-items: center; gap: 18px;
+    transition: background .15s;
+  }
+  details.day summary::-webkit-details-marker { display: none; }
+  details.day summary:hover { background: #fff; }
+  details.day .day-num {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--ochre), var(--terracotta)); color: #fff;
+    display: flex; align-items: center; justify-content: center; flex: 0 0 auto;
+    font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.1rem;
+  }
+  details.day .day-info { flex: 1; }
+  details.day .day-info .date {
+    font-size: .78rem; color: var(--ochre); font-weight: 700;
+    text-transform: uppercase; letter-spacing: .1em;
+  }
+  details.day .day-info .title { font-weight: 600; color: var(--ink); font-size: 1.08rem; margin-top: 2px; }
+  details.day .chev {
+    flex: 0 0 auto; color: var(--muted); transition: transform .2s;
+  }
+  details.day[open] .chev { transform: rotate(180deg); }
+  details.day .day-body { padding: 0 24px 24px 86px; }
+  @media (max-width: 700px) { details.day .day-body { padding: 0 20px 20px 20px; } }
+
+
+  .schedule { display: grid; grid-template-columns: 130px 1fr; gap: 12px 20px; margin-bottom: 16px; }
+  .schedule .time {
+    font-family: 'Fraunces', serif; font-weight: 600; color: var(--azul); padding-top: 2px;
+  }
+  .schedule .activity { color: var(--slate); }
+  .schedule .activity strong { color: var(--ink); }
+  .tip {
+    background: linear-gradient(135deg, #fef9c3, #fefce8);
+    border-left: 3px solid var(--gold);
+    padding: 14px 18px; border-radius: 10px; font-size: .92rem;
+    color: var(--slate); margin-top: 14px;
+  }
+  .tip strong { color: var(--gold); }
+
+  .extras {
+    margin-top: 16px;
+    padding: 18px 22px;
+    background: linear-gradient(135deg, #eff6ff, #f5f3ff);
+    border-left: 3px solid var(--azul);
+    border-radius: 10px;
+  }
+  .extras h5 {
+    margin: 0 0 12px;
+    font-family: 'Fraunces', serif;
+    font-size: .95rem; font-weight: 600;
+    color: var(--azul-deep);
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .extras h5::before {
+    content: '+';
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--azul); color: #fff;
+    font-family: 'Inter', sans-serif; font-weight: 700; font-size: 1rem;
+  }
+  .extras ul {
+    margin: 0; padding: 0; list-style: none;
+    display: grid; gap: 4px;
+  }
+  .extras li {
+    padding: 8px 0;
+    border-bottom: 1px dotted rgba(0,0,0,.08);
+    font-size: .92rem;
+    color: var(--slate);
+    line-height: 1.45;
+  }
+  .extras li:last-child { border-bottom: none; }
+  .extras li a {
+    font-weight: 600;
+    color: var(--azul-deep);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color .15s;
+  }
+  .extras li a:hover {
+    border-bottom-color: var(--azul);
+    text-decoration: none;
+  }
+  .extras li a::after {
+    content: ' ↗';
+    font-size: .7em;
+    opacity: .55;
+    margin-left: 2px;
+  }
+
+  /* ===== Photo gallery ===== */
+  #gallery { background: var(--cream); }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 200px;
+    gap: 14px;
+  }
+  @media (max-width: 900px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 180px; } }
+  .gallery-item {
+    background-size: cover; background-position: center;
+    border-radius: 12px; overflow: hidden; position: relative;
+    cursor: pointer; transition: transform .3s ease;
+    background-color: #1e3a8a;
+  }
+  .gallery-item:hover { transform: scale(1.02); }
+  .gallery-item::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,.7) 100%);
+  }
+  .gallery-item .cap {
+    position: absolute; left: 16px; right: 16px; bottom: 14px; z-index: 1;
+    color: #fff;
+  }
+  .gallery-item .cap .name { font-family: 'Fraunces', serif; font-size: 1.05rem; font-weight: 600; }
+  .gallery-item .cap .loc { font-size: .78rem; opacity: .85; margin-top: 2px; letter-spacing: .04em; }
+  .g-tall { grid-row: span 2; }
+  .g-wide { grid-column: span 2; }
+  @media (max-width: 900px) {
+    .g-tall { grid-row: span 1; }
+    .g-wide { grid-column: span 2; }
+  }
+  .gallery-item.gradient-surf { background-image: linear-gradient(135deg, #0ea5e9, #1e3a8a); }
+  .gallery-item.gradient-ropes { background-image: linear-gradient(135deg, #65a30d, #14532d); }
+  .gallery-item.gradient-speedboat { background-image: linear-gradient(135deg, #06b6d4, #1e40af); }
+  .gallery-item.gradient-kayak { background-image: linear-gradient(135deg, #14b8a6, #0c4a6e); }
+  .gallery-item.gradient-waterpark { background-image: linear-gradient(135deg, #38bdf8, #1e40af); }
+  .gallery-item .big-emoji {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    font-size: 4.5rem; z-index: 1;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,.35));
+  }
+
+  /* ===== Activities ===== */
+  #activities { background: var(--paper); }
+  .act-tabs { display: flex; gap: 8px; margin-bottom: 30px; flex-wrap: wrap; }
+  .act-tab {
+    padding: 10px 20px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--cream); cursor: pointer; font-weight: 500; color: var(--slate);
+    font-family: inherit; font-size: .92rem;
+    transition: all .15s;
+  }
+  .act-tab.active, .act-tab:hover {
+    background: var(--azul); color: #fff; border-color: var(--azul);
+  }
+  .act-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 18px;
+  }
+  .act-card {
+    background: var(--cream); border: 1px solid var(--line); border-radius: var(--r);
+    padding: 24px; transition: transform .2s, box-shadow .2s;
+  }
+  .act-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); border-color: var(--ochre); }
+  .act-card .icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: linear-gradient(135deg, #fed7aa, #fdba74);
+    display: flex; align-items: center; justify-content: center; margin-bottom: 14px;
+    font-size: 1.4rem;
+  }
+  .act-card.surf .icon { background: linear-gradient(135deg, #bae6fd, #7dd3fc); }
+  .act-card.nature .icon { background: linear-gradient(135deg, #bbf7d0, #86efac); }
+  .act-card.adventure .icon { background: linear-gradient(135deg, #fed7aa, #fdba74); }
+  .act-card.culture .icon { background: linear-gradient(135deg, #ddd6fe, #c4b5fd); }
+  .act-card h4 { color: var(--ink); margin-bottom: 6px; }
+  .act-card .meta { font-size: .8rem; color: var(--ochre); font-weight: 600; margin-bottom: 10px; }
+  .act-card .desc { font-size: .92rem; color: var(--slate); }
+  .act-card .star { display: inline-block; color: var(--gold); margin-left: 6px; }
+  .act-card .provider {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 14px; padding: 8px 14px;
+    background: var(--azul); color: #fff !important;
+    border-radius: 999px; font-size: .82rem; font-weight: 600;
+    text-decoration: none;
+    transition: background .15s, transform .15s;
+  }
+  .act-card .provider:hover {
+    background: var(--azul-deep); transform: translateY(-1px);
+    text-decoration: none;
+  }
+  .act-card .provider::after { content: '→'; font-weight: 700; }
+
+  /* ===== Bookings checklist ===== */
+  #bookings { background: var(--cream); }
+  .checklist {
+    background: var(--paper); border: 1px solid var(--line); border-radius: var(--r);
+    padding: 8px; box-shadow: var(--shadow-sm);
+  }
+  .check-item {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 18px 22px; border-bottom: 1px solid var(--line);
+  }
+  .check-item:last-child { border-bottom: none; }
+  .check-item .box {
+    width: 22px; height: 22px; border: 2px solid var(--azul);
+    border-radius: 6px; flex: 0 0 auto; margin-top: 3px;
+    cursor: pointer; transition: background .15s;
+    position: relative;
+  }
+  .check-item .box.checked {
+    background: var(--azul); border-color: var(--azul);
+  }
+  .check-item .box.checked::after {
+    content: '✓'; position: absolute; inset: 0; color: #fff;
+    font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: .9rem;
+  }
+  .check-item .what { flex: 1; }
+  .check-item .what .title { font-weight: 600; color: var(--ink); }
+  .check-item .what .sub { font-size: .9rem; color: var(--muted); margin-top: 4px; }
+  .check-item .urgency {
+    font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
+    font-weight: 700; padding: 4px 10px; border-radius: 999px;
+    flex: 0 0 auto; align-self: center;
+    background: #fff7ed; color: var(--ochre); border: 1px solid #fed7aa;
+  }
+  .urgency.high { background: #fee2e2; color: var(--terracotta); border-color: #fecaca; }
+  .urgency.med { background: #fef9c3; color: var(--gold); border-color: #fde68a; }
+  .urgency.low { background: #dcfce7; color: var(--olive); border-color: #bbf7d0; }
+
+  /* ===== Practical ===== */
+  #practical { background: var(--paper); }
+  .prac-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+  }
+  .prac-card {
+    background: var(--cream); border: 1px solid var(--line); border-radius: var(--r); padding: 24px;
+  }
+  .prac-card .icon {
+    font-size: 1.6rem; margin-bottom: 10px;
+  }
+  .prac-card h4 { color: var(--ink); margin-bottom: 8px; }
+  .prac-card p { font-size: .92rem; color: var(--slate); margin: 0; }
+  .prac-card .num {
+    font-family: 'Fraunces', serif; font-size: 1.5rem; color: var(--azul); font-weight: 600;
+    margin-top: 6px;
+  }
+
+  .nightlife {
+    margin-top: 40px; background: linear-gradient(135deg, #0c0a09, #1c1917);
+    color: #fff; padding: 36px; border-radius: var(--r);
+  }
+  .nightlife h3 { color: #fff; margin-bottom: 20px; }
+  .nightlife-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 18px; }
+  .nl-item { padding: 18px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; }
+  .nl-item .name { font-weight: 600; font-size: 1.05rem; }
+  .nl-item .stars { color: var(--ochre-soft); margin: 6px 0; font-size: 1rem; }
+  .nl-item .note { font-size: .85rem; color: rgba(255,255,255,.7); }
+
+  /* ===== Footer ===== */
+  footer {
+    background: linear-gradient(135deg, #0c0a09, #1c1917);
+    color: #fff; padding: 60px 24px 40px;
+  }
+  footer .wrap {
+    display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px;
+  }
+  @media (max-width: 800px) { footer .wrap { grid-template-columns: 1fr; } }
+  footer h4 { color: #fff; margin-bottom: 14px; }
+  footer p, footer a { color: rgba(255,255,255,.75); }
+  footer a:hover { color: var(--ochre-soft); }
+  footer .signature {
+    font-family: 'Fraunces', serif; font-style: italic; font-size: 1.1rem;
+    color: var(--ochre-soft);
+  }
+  footer .bottom {
+    margin-top: 40px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.1);
+    text-align: center; font-size: .85rem; color: rgba(255,255,255,.5);
+  }
+
+  /* ===== Map ===== */
+  #map { background: var(--cream); }
+  .map-layout { display: grid; grid-template-columns: 320px 1fr; gap: 28px; align-items: stretch; }
+  @media (max-width: 860px) { .map-layout { grid-template-columns: 1fr; } }
+  .map-legend { display: flex; flex-direction: column; gap: 12px; }
+  .map-legend .leg {
+    display: flex; gap: 14px; align-items: flex-start;
+    background: var(--paper); border: 1px solid var(--line); border-radius: var(--r);
+    padding: 16px 18px; box-shadow: var(--shadow-sm);
+    transition: transform .2s, box-shadow .2s, border-color .2s; cursor: pointer;
+  }
+  .map-legend .leg:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--azul); }
+  .map-legend .leg .pin {
+    width: 34px; height: 34px; border-radius: 50%; flex: 0 0 auto;
+    background: linear-gradient(135deg, var(--azul), var(--azul-deep)); color: #fff;
+    display: flex; align-items: center; justify-content: center; font-weight: 700;
+    font-family: 'Fraunces', serif;
+  }
+  .map-legend .leg .info .name { font-weight: 600; color: var(--ink); }
+  .map-legend .leg .info .sub { font-size: .82rem; color: var(--muted); margin-top: 2px; }
+  #leaflet-map {
+    width: 100%; min-height: 540px; height: 100%;
+    border-radius: var(--r); border: 1px solid var(--line); box-shadow: var(--shadow-md);
+    z-index: 0;
+  }
+  @media (max-width: 860px) { #leaflet-map { min-height: 420px; } }
+  .leaflet-popup-content { font-family: 'Inter', sans-serif; }
+  .leaflet-popup-content .pop-name { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.05rem; color: var(--ink); }
+  .leaflet-popup-content .pop-sub { font-size: .85rem; color: var(--muted); margin-top: 2px; }
+
+  /* misc */
+  .icon-inline { width: 16px; height: 16px; vertical-align: middle; margin-right: 4px; color: var(--ochre); }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="top">
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span>Rozen · Portugal '26</div>
+    <ul>
+      <li><a href="#flights">Flights</a></li>
+      <li><a href="#route">Route</a></li>
+      <li><a href="#map">Map</a></li>
+      <li><a href="#hotels">Hotels</a></li>
+      <li><a href="#itinerary">Itinerary</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#activities">Activities</a></li>
+      <li><a href="#bookings">To Book</a></li>
+      <li><a href="#practical">Info</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="bg"></div>
+  <div class="wrap">
+    <div class="eyebrow">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      Family Road Trip · Summer 2026
+    </div>
+    <h1>The Rozens<br/>do <em>Portugal</em>.</h1>
+    <p class="sub">Twelve days of medieval castles, golden Algarve cliffs, surf school in Sagres, and pastéis de nata in Lisbon. Two adults, three kids, one rental car, ~720 km.</p>
+    <div class="pills">
+      <span class="pill">📅 Jul 30 – Aug 10, 2026</span>
+      <span class="pill">👨‍👩‍👧‍👦 5 travelers (10, 14, 17)</span>
+      <span class="pill">🚗 ~720 km drive</span>
+      <span class="pill">🏨 4 hotels · all confirmed</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============ GLANCE ============ -->
+<section id="glance">
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat"><div class="label">Trip duration</div><div class="value">12 days</div><div class="note">11 nights · Jul 30 → Aug 10</div></div>
+      <div class="stat"><div class="label">Travelers</div><div class="value">5</div><div class="note">2 adults + 3 kids</div></div>
+      <div class="stat"><div class="label">Hotels</div><div class="value">4</div><div class="note">all confirmed · free cancel</div></div>
+      <div class="stat"><div class="label">Driving</div><div class="value">~720 km</div><div class="note">Lisbon → Alentejo → Algarve loop</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FLIGHTS ============ -->
+<section id="flights">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">El Al · Direct</span>
+      <h2>Flights</h2>
+      <p>Direct Tel Aviv ↔ Lisbon both ways. Booking code <strong>Z8UI4Z</strong>, ticket 1142492793909.</p>
+    </div>
+
+    <div class="flight-grid">
+      <div class="flight">
+        <div class="label">Outbound · Jul 30</div>
+        <div class="route">
+          <div class="airport">
+            <div class="code">TLV</div>
+            <div class="city">Tel Aviv · 16:55</div>
+          </div>
+          <div class="arrow">→</div>
+          <div class="airport">
+            <div class="code">LIS</div>
+            <div class="city">Lisbon · 20:55</div>
+          </div>
+        </div>
+        <div class="meta">
+          <div><div class="k">Flight</div><div class="v">LY 375</div></div>
+          <div><div class="k">Seat</div><div class="v">37H</div></div>
+          <div><div class="k">Date</div><div class="v">Thu Jul 30, 2026</div></div>
+          <div><div class="k">Duration</div><div class="v">~6h 30m</div></div>
+        </div>
+      </div>
+
+      <div class="flight">
+        <div class="label">Return · Aug 10</div>
+        <div class="route">
+          <div class="airport">
+            <div class="code">LIS</div>
+            <div class="city">Lisbon · 22:15</div>
+          </div>
+          <div class="arrow">→</div>
+          <div class="airport">
+            <div class="code">TLV</div>
+            <div class="city">Tel Aviv · 05:25+1</div>
+          </div>
+        </div>
+        <div class="meta">
+          <div><div class="k">Flight</div><div class="v">LY 376</div></div>
+          <div><div class="k">Seat</div><div class="v">37C</div></div>
+          <div><div class="k">Date</div><div class="v">Mon Aug 10, 2026</div></div>
+          <div><div class="k">Duration</div><div class="v">~5h 10m</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="booking-strip">
+      <div class="item"><div class="k">Booking code</div><div class="v">Z8UI4Z</div></div>
+      <div class="item"><div class="k">Ticket #</div><div class="v">1142492793909</div></div>
+      <div class="item"><div class="k">Baggage</div><div class="v">1 checked / pax</div></div>
+    </div>
+
+    <div class="alert">
+      <strong>⚠ El Al check-in:</strong> Arrive Lisbon airport <strong>by 19:15 on Aug 10</strong> — El Al requires 3 hours before departure.
+    </div>
+  </div>
+</section>
+
+<!-- ============ ROUTE ============ -->
+<section id="route">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">The drive</span>
+      <h2>Four stops, one loop</h2>
+      <p>Land in Lisbon, drive south to the Alentejo coast, west to the Algarve, then back through Évora to Lisbon for the flight home.</p>
+    </div>
+
+    <div class="route-track">
+      <div class="route-step">
+        <div class="num">1</div>
+        <h4>Alcácer do Sal & Comporta</h4>
+        <div class="nights">3 nights · Jul 30 – Aug 2</div>
+        <p style="margin: 14px 0 0; font-size: .92rem;">Sleeping in a 12th-century castle. Comporta beach, Arrábida coves.</p>
+        <div class="drive">🚗 ~90 km · 1h 15min from LIS airport</div>
+      </div>
+      <div class="route-step">
+        <div class="num">2</div>
+        <h4>Lagos & Sagres, Algarve</h4>
+        <div class="nights">5 nights · Aug 2 – Aug 7</div>
+        <p style="margin: 14px 0 0; font-size: .92rem;">Wellness resort base. Surf, kayak caves, Seven Hanging Valleys hike.</p>
+        <div class="drive">🚗 ~220 km · 2h 30min south</div>
+      </div>
+      <div class="route-step">
+        <div class="num">3</div>
+        <h4>Évora</h4>
+        <div class="nights">1 night · Aug 7 – Aug 8</div>
+        <p style="margin: 14px 0 0; font-size: .92rem;">UNESCO old town, Chapel of Bones, Roman temple. Zoomarine en route.</p>
+        <div class="drive">🚗 ~240 km · via Zoomarine</div>
+      </div>
+      <div class="route-step">
+        <div class="num">4</div>
+        <h4>Lisbon</h4>
+        <div class="nights">2 nights · Aug 8 – Aug 10</div>
+        <p style="margin: 14px 0 0; font-size: .92rem;">Sintra day-trip, Belém, LX Factory, Tram 28.</p>
+        <div class="drive">🚗 ~130 km · 1h 30min north</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MAP ============ -->
+<section id="map">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">The route, mapped</span>
+      <h2>Where each stop sits</h2>
+      <p>Land in Lisbon, loop south through the Alentejo coast and the Algarve, then back up through Évora to Lisbon. Click any marker or card for details.</p>
+    </div>
+
+    <div class="map-layout">
+      <div class="map-legend" id="map-legend"></div>
+      <div id="leaflet-map"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOTELS ============ -->
+<section id="hotels">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">Four homes for the week</span>
+      <h2>Where we're staying</h2>
+      <p>All four properties are confirmed with free cancellation.</p>
+    </div>
+
+    <div class="hotels-grid">
+
+      <div class="hotel">
+        <div class="photo" data-main="hotels/74523873.jpg" style="background-image: url('hotels/74523873.jpg');">
+          <div class="nights-badge">🌙 3 nights</div>
+          <div class="status-badge">✓ Confirmed</div>
+        </div>
+        <div class="thumbs">
+          <div class="thumb active" data-src="hotels/74523873.jpg" style="background-image: url('hotels/74523873.jpg');"><div class="caption">🏰 The castle</div></div>
+          <div class="thumb" data-src="hotels/74523334.jpg" style="background-image: url('hotels/74523334.jpg');"><div class="caption">🏊 Pool &amp; walls</div></div>
+          <div class="thumb" data-src="hotels/74521575.jpg" style="background-image: url('hotels/74521575.jpg');"><div class="caption">🥐 Breakfast</div></div>
+        </div>
+        <div class="body">
+          <div class="place">Stop 1 · Alentejo</div>
+          <h3>Pousada Castelo de Alcácer do Sal</h3>
+          <p class="desc">A 12th-century medieval castle perched over the Sado river, converted into a Pousada hotel. About 30 minutes from Comporta beach. Yes, you're literally sleeping in a castle.</p>
+          <div class="meta-row">
+            <div><div class="k">Dates</div><div class="v">Jul 30 – Aug 2</div></div>
+            <div><div class="k">Rooms</div><div class="v">2 rooms</div></div>
+            <div><div class="k">Cancellation</div><div class="v">Free</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hotel">
+        <div class="photo" data-main="hotels/205114202.jpg" style="background-image: url('hotels/205114202.jpg');">
+          <div class="nights-badge">🌙 5 nights</div>
+          <div class="status-badge">✓ Confirmed</div>
+        </div>
+        <div class="thumbs">
+          <div class="thumb active" data-src="hotels/205114202.jpg" style="background-image: url('hotels/205114202.jpg');"><div class="caption">🏊 Main pool</div></div>
+          <div class="thumb" data-src="hotels/766070160.jpg" style="background-image: url('hotels/766070160.jpg');"><div class="caption">🌊 The location</div></div>
+          <div class="thumb" data-src="hotels/205137962.jpg" style="background-image: url('hotels/205137962.jpg');"><div class="caption">💆 Spa &amp; jacuzzi</div></div>
+        </div>
+        <div class="body">
+          <div class="place">Stop 2 · Algarve</div>
+          <h3>Cascade Wellness Resort, Lagos</h3>
+          <p class="desc">Pool and wellness resort on the cliffs of Ponta da Piedade, a short drive from Lagos old town. This is the base for surf days in Sagres, the Seven Hanging Valleys hike, kayak tours, and Parque Aventura.</p>
+          <div class="meta-row">
+            <div><div class="k">Dates</div><div class="v">Aug 2 – Aug 7</div></div>
+            <div><div class="k">Vibe</div><div class="v">Wellness · Pool</div></div>
+            <div><div class="k">Cancellation</div><div class="v">Free</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hotel">
+        <div class="photo" data-main="hotels/379600919.jpg" style="background-image: url('hotels/379600919.jpg');">
+          <div class="nights-badge">🌙 1 night</div>
+          <div class="status-badge">✓ Confirmed</div>
+        </div>
+        <div class="thumbs">
+          <div class="thumb active" data-src="hotels/379600919.jpg" style="background-image: url('hotels/379600919.jpg');"><div class="caption">🏠 The convent</div></div>
+          <div class="thumb" data-src="hotels/379601174.jpg" style="background-image: url('hotels/379601174.jpg');"><div class="caption">🍞 Breakfast room</div></div>
+          <div class="thumb" data-src="hotels/379601317.jpg" style="background-image: url('hotels/379601317.jpg');"><div class="caption">⛪ Grounds chapel</div></div>
+        </div>
+        <div class="body">
+          <div class="place">Stop 3 · Alentejo · UNESCO</div>
+          <h3>O Conventinho, Évora</h3>
+          <p class="desc">A converted convent inside Évora's UNESCO-listed walled old town. Roman temple, Chapel of Bones, and pastel de Évora all within walking distance. Quick overnight before the final push to Lisbon.</p>
+          <div class="meta-row">
+            <div><div class="k">Dates</div><div class="v">Aug 7 – Aug 8</div></div>
+            <div><div class="k">Vibe</div><div class="v">Converted convent</div></div>
+            <div><div class="k">Cancellation</div><div class="v">Free</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hotel">
+        <div class="photo" data-main="hotels/871308045.jpg" style="background-image: url('hotels/871308045.jpg');">
+          <div class="nights-badge">🌙 2 nights</div>
+          <div class="status-badge">✓ Confirmed</div>
+        </div>
+        <div class="thumbs">
+          <div class="thumb active" data-src="hotels/871308045.jpg" style="background-image: url('hotels/871308045.jpg');"><div class="caption">🌆 Rooftop view</div></div>
+          <div class="thumb" data-src="hotels/753066658.jpg" style="background-image: url('hotels/753066658.jpg');"><div class="caption">🛏 Design room</div></div>
+          <div class="thumb" data-src="hotels/844516753.jpg" style="background-image: url('hotels/844516753.jpg');"><div class="caption">🌺 Terrace</div></div>
+        </div>
+        <div class="body">
+          <div class="place">Stop 4 · Lisbon</div>
+          <h3>Mama Shelter Lisboa</h3>
+          <p class="desc">Príncipe Real / Avenida da Liberdade location with a rooftop bar overlooking the Tagus. 18 minutes' walk to Rossio station for the Sintra train. Playful, family-friendly design.</p>
+          <div class="meta-row">
+            <div><div class="k">Dates</div><div class="v">Aug 8 – Aug 10</div></div>
+            <div><div class="k">Rooms</div><div class="v">2 rooms</div></div>
+            <div><div class="k">Cancellation</div><div class="v">Free</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ ITINERARY ============ -->
+<section id="itinerary">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">12 days · 12 plans</span>
+      <h2>The day-by-day</h2>
+      <p>Click any day to expand. Tips and reservations needed are noted per day.</p>
+    </div>
+
+    <div class="timeline">
+
+      <!-- STOP 1 -->
+      <div class="stop-block">
+        <div class="stop-header">
+          <div class="meta-left">
+            <div class="kick">Stop 1 of 4</div>
+            <h3>Alcácer do Sal & the Arrábida coast</h3>
+            <div class="dates">Jul 30 – Aug 2 · 3 nights · Pousada Castelo de Alcácer do Sal</div>
+          </div>
+          <div class="badge">Days 1 – 3</div>
+        </div>
+
+        <details class="day" open>
+          <summary>
+            <div class="day-num">1</div>
+            <div class="day-info">
+              <div class="date">Thu · Jul 30</div>
+              <div class="title">Fly to Lisbon → drive to the castle</div>
+            </div>
+            <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="day-body">
+            <div class="schedule">
+              <div class="time">16:55</div><div class="activity">Depart Tel Aviv on <strong>LY375</strong></div>
+              <div class="time">20:55</div><div class="activity">Land Lisbon. Clear immigration. Pick up rental car.</div>
+              <div class="time">~22:30</div><div class="activity">Drive ~90 km south to Alcácer do Sal.</div>
+              <div class="time">Night</div><div class="activity">Late check-in at <strong>Pousada Castelo</strong> — sleeping in a 12th-century castle.</div>
+            </div>
+            <div class="tip"><strong>Tip:</strong> Confirm late check-in with the Pousada in advance. Grab snacks at the airport for the drive — most things will be closed.</div>
+          </div>
+        </details>
+
+        <details class="day">
+          <summary>
+            <div class="day-num">2</div>
+            <div class="day-info">
+              <div class="date">Fri · Jul 31</div>
+              <div class="title">Setúbal & Arrábida National Park</div>
+            </div>
+            <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="day-body">
+            <div class="extras">
+              <h5>Main options for the day</h5>
+              <ul>
+                <li><a href="https://www.tripadvisor.com/AttractionProductReview-g189158-d13399433-Arrabida_Snorkeling_Adventure_with_Transfer_from_Lisbon-Lisbon_Lisbon_District_Cen.html" target="_blank" rel="noopener">Arrábida snorkeling adventure</a> — Snorkel the turquoise coves of the national park. Best in the morning when the water is calmest and clearest.</li>
+                <li><a href="https://www.tripadvisor.com/AttractionProductReview-g3295819-d19255980-Coasteering_at_Portinho_da_Arrabida-Portinho_da_Arrabida_Setubal_District_Alentej.html" target="_blank" rel="noopener">Coasteering at Portinho da Arrábida</a> — Climb, swim and cliff-jump along the limestone coast. A guided half-day of adrenaline for the older kids.</li>
+                <li><a href="https://en.wikipedia.org/wiki/Convent_of_Arr%C3%A1bida" target="_blank" rel="noopener">Optional: Serra da Arrábida coastal trail</a> — Easy/moderate ridge walk (5–8 km) dropping to hidden coves. Start before 9am — it gets hot fast in August.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <details class="day">
+          <summary>
+            <div class="day-num">3</div>
+            <div class="day-info">
+              <div class="date">Sat · Aug 1</div>
+              <div class="title">Sado dolphin tour + Comporta beach</div>
+            </div>
+            <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="day-body">
+            <div class="extras">
+              <h5>Main options for the day</h5>
+              <ul>
+                <li><a href="https://sadoarrabida.com/en/" target="_blank" rel="noopener">Sado dolphin watching tour</a> — Boat trip to the resident bottlenose dolphins of the Sado estuary. Go in the morning for calmer seas and the best sighting chances.</li>
+                <li><a href="https://www.tripadvisor.com/Attraction_Review-g660495-d2578100-Reviews-Comporta_Beach-Grandola_Setubal_District_Alentejo.html" target="_blank" rel="noopener">Praia de Comporta beach time</a> — Wide, pine-backed, uncrowded white sand. Relaxed afternoon to swim and unwind before tomorrow's drive south.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- STOP 2 -->
+      <div class="stop-block">
+        <div class="stop-header">
+          <div class="meta-left">
+            <div class="kick">Stop 2 of 4</div>
+            <h3>Lagos & Sagres, Algarve</h3>
+            <div class="dates">Aug 2 – Aug 7 · 5 nights · Cascade Wellness Resort</div>
+          </div>
+          <div class="badge">Days 4 – 8</div>
+        </div>
+
+        <details class="day">
+          <summary>
+            <div class="day-num">4</div>
+            <div class="day-info">
+              <div class="date">Sun · Aug 2</div>
+              <div class="title">Drive to Lagos · Praia Dona Ana & Ponta da Piedade</div>
+            </div>
+            <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="day-body">
+            <div class="extras">
+              <h5>Main options for the day</h5>
+              <ul>
+                <li><a href="https://www.tripadvisor.com/Attraction_Review-g189117-d587942-Reviews-Praia_Dona_Ana-Lagos_Faro_District_Algarve.html" target="_blank" rel="noopener">Praia Dona Ana</a> — Iconic Lagos beach framed by golden rock arches. Drive down after the ~2.5 hr morning drive from Alcácer, then walk around and explore the area.</li>
+                <li><a href="https://www.alltrails.com/trail/portugal/faro/farol-da-ponta-da-piedade" target="_blank" rel="noopener">Ponta da Piedade lighthouse walk</a> — Easy clifftop walk past the lighthouse and the famous rock formations. Best at sunset — go in the late afternoon/evening.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <details class="day">
+          <summary>
+            <div class="day-num">5</div>
+            <div class="day-info">
+              <div class="date">Mon · Aug 3</div>
+              <div class="title">🏄 Sagres surf school + Cape St. Vincent</div>
+            </div>
+            <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="day-body">
+            <div class="extras">
+              <h5>Main options for the day</h5>
+              <ul>
+                <li><a href="https://wavesensations.com/sagres-surf-school/" target="_blank" rel="noopener">Sagres surf school (Wave Sensations)</a> — A 2–3 hr beginner lesson for all five of us on the Sagres beaches. Book the morning slot and at least a week ahead — specify a group of 5, mixed ages.</li>
+                <li><a href="https://www.viator.com/tours/Lagos/LAGOS-and-SAGRES-CAPE-ST-VINCENT-PRIVATE-FROM-VILAMOURA-GL-TOURS/d23572-75811P36" target="_blank" rel="noopener">Cape St. Vincent</a> — The dramatic southwestern tip of Europe — cliffs and lighthouse. Best in the afternoon for the light; bring a layer, it gets windy.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <details class="day">
+          <summary>
+            <div class="day-num">6</div>
+            <div class="day-info">
+              <div class="date">Tue · Aug 4</div>
+              <div class="title">🌊 Aquashow Waterpark day</div>
+            </div>
+            <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="day-body">
+            <div class="extras">
+              <h5>Main options for the day</h5>
+              <ul>
+                <li><a href="https://aquashowpark.com/en/home/" target="_blank" rel="noopener">Aquashow Waterpark</a> — A full family day of water slides, wave pool, rides and shows near Quarteira. Arrive at opening to hit the big slides before the crowds, and bring plenty of water and sunscreen.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <details class="day">
+          <summary>
+            <div class="day-num">7</div>
+            <div class="day-info">
+              <div class="date">Wed · Aug 5</div>
+              <div class="title">🛶 Kayak the caves + Praia do Camilo</div>
+            </div>
+            <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="day-body">
+            <div class="extras">
+              <h5>Main options for the day</h5>
+              <ul>
+                <li><a href="https://www.viator.com/tours/Lagos/Kayak-Trip-in-Lagos/d23572-11000P1" target="_blank" rel="noopener">Ponta da Piedade kayak/boat tour (2 hrs)</a> — Paddle to the sea caves and rock arches from Lagos marina. Best light in the morning, so book an early slot.</li>
+                <li><a href="https://www.tripadvisor.com/Attraction_Review-g189117-d2521034-Reviews-Praia_do_Camilo-Lagos_Faro_District_Algarve.html" target="_blank" rel="noopener">Praia do Camilo</a> — A dramatic cliff staircase down to a secluded cove — perfect for a swim and lunch after the kayak tour.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <details class="day">
+          <summary>
+            <div class="day-num">8</div>
+            <div class="day-info">
+              <div class="date">Thu · Aug 6</div>
+              <div class="title">🐬 Free choice: surf, water park, or dolphins</div>
+            </div>
+            <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="day-body">
+            <div class="extras">
+              <h5>Main options for the day</h5>
+              <ul>
+                <li><a href="https://wavesensations.com/sagres-surf-school/" target="_blank" rel="noopener">Another surf day</a> — Rent boards or book a second lesson back in Sagres for whoever caught the bug on Day 5. Best in the morning.</li>
+                <li><a href="https://www.slidesplash.com/en/" target="_blank" rel="noopener">Slide &amp; Splash water park</a> — The biggest water park in the Algarve — an alternative full-day thrill option for the kids.</li>
+                <li><a href="https://www.viator.com/tours/Lagos/Coast-Cruise-Trip-to-Ponta-da-Piedade-from-Lagos/d23572-55704P2" target="_blank" rel="noopener">Dolphin watching catamaran (1.5 hrs)</a> — From Lagos marina, ~95% sighting rate. Book a day ahead; afternoon departures work well.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- STOP 3 -->
+      <div class="stop-block">
+        <div class="stop-header">
+          <div class="meta-left">
+            <div class="kick">Stop 3 of 4</div>
+            <h3>Zoomarine & Évora</h3>
+            <div class="dates">Aug 7 – Aug 8 · 1 night · O Conventinho</div>
+          </div>
+          <div class="badge">Days 9 – 10</div>
+        </div>
+
+        <details class="day">
+          <summary>
+            <div class="day-num">9</div>
+            <div class="day-info">
+              <div class="date">Fri · Aug 7</div>
+              <div class="title">🐬 Zoomarine + drive to Évora</div>
+            </div>
+            <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="day-body">
+            <div class="extras">
+              <h5>Main options for the day</h5>
+              <ul>
+                <li><a href="https://www.tiqets.com/en/guia-attractions-c230888/tickets-for-zoomarine-algarve-p978576/" target="_blank" rel="noopener">Zoomarine Algarve</a> — Water slides, wave pool, dolphin and seal shows, and the Jurassic River rapids. Spend the morning through early afternoon here, then drive on. Buy tickets online and arrive at opening (9am).</li>
+                <li><a href="https://en.wikipedia.org/wiki/Pra%C3%A7a_do_Giraldo" target="_blank" rel="noopener">Drive to Évora · evening on Praça do Giraldo</a> — Leave Zoomarine by ~2pm for the ~1h45 drive north. In the evening, stroll Évora's main square and the medieval old town, and grab dinner at a tasca.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <details class="day">
+          <summary>
+            <div class="day-num">10</div>
+            <div class="day-info">
+              <div class="date">Sat · Aug 8</div>
+              <div class="title">💀 Chapel of Bones → drive to Lisbon</div>
+            </div>
+            <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="day-body">
+            <div class="extras">
+              <h5>Main options for the day</h5>
+              <ul>
+                <li><a href="https://www.evoraportugaltourism.com/guide/chapel-of-bones-igreja-de-sao-francisco.html" target="_blank" rel="noopener">Chapel of Bones (Igreja de São Francisco)</a> — Walls and ceiling lined with the skulls and bones of ~5,000 monks — unforgettable for kids. Visit in the morning / late AM before the drive.</li>
+                <li><strong>Drive to Lisbon · check in</strong> — Around midday, drive ~1.5 hrs to Lisbon and drop the rental car at the airport or a city office (parking in the centre is expensive — go car-free from here). Check in to Mama Shelter Lisboa for a slow afternoon.</li>
+                <li><strong>Lisbon by night</strong> — Ease into the city: sunset and drinks at a Bairro Alto rooftop, a fado dinner in Alfama, or the stalls at Time Out Market.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- STOP 4 -->
+      <div class="stop-block">
+        <div class="stop-header">
+          <div class="meta-left">
+            <div class="kick">Stop 4 of 4</div>
+            <h3>Lisbon</h3>
+            <div class="dates">Aug 8 – Aug 10 · 2 nights · Mama Shelter Lisboa</div>
+          </div>
+          <div class="badge">Days 11 – 12</div>
+        </div>
+
+        <details class="day">
+          <summary>
+            <div class="day-num">11</div>
+            <div class="day-info">
+              <div class="date">Sun · Aug 9</div>
+              <div class="title">🏰 Sintra day-trip</div>
+            </div>
+            <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="day-body">
+            <div class="extras">
+              <h5>Main options for the day</h5>
+              <ul>
+                <li><a href="https://www.parquesdesintra.pt/en/parks-monuments/park-and-national-palace-of-pena/" target="_blank" rel="noopener">Pena Palace</a> — The colourful fairy-tale castle on the hilltop — the most visually striking sight in Portugal. Take the morning train from Rossio (40 min, no car) and pre-book tickets; it sells out in August, so go early.</li>
+                <li><a href="https://www.parquesdesintra.pt/en/parks-monuments/the-moorish-castle/" target="_blank" rel="noopener">Moorish Castle</a> — Ancient ramparts to climb, a 10-min walk from Pena. Do it in the afternoon, or hike up through the forest via the Vila Sassetti trail.</li>
+                <li><strong>Evening — shopping & fun in Lisbon</strong> — Train back and spend the evening in the city: shopping on Avenida da Liberdade / Chiado, and dinner in Bairro Alto or Alfama.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <details class="day">
+          <summary>
+            <div class="day-num">12</div>
+            <div class="day-info">
+              <div class="date">Mon · Aug 10</div>
+              <div class="title">Lisbon at your own pace → fly home ✈️</div>
+            </div>
+            <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="day-body">
+            <div class="extras">
+              <h5>Main options for the day</h5>
+              <ul>
+                <li><strong>Lisbon at your own pace</strong> — Soak up the city on the last day: Belém (Jerónimos Monastery, Tower of Belém and the original Pastéis de Belém), LX Factory's food and vintage shops, a Tram 28 ride through Alfama, and last-minute souvenirs.</li>
+                <li><a href="https://oceanario.pt/en/visit/" target="_blank" rel="noopener">Oceanário de Lisboa</a> — One of the world's best aquariums and an easy crowd-pleaser for the kids if you'd rather have a relaxed indoor morning.</li>
+                <li><strong>Drive to the airport</strong> — Head to Lisbon airport in the late afternoon. <strong>LY376 departs 22:15.</strong> El Al asks for 3 hrs before departure, so be at the airport by <strong>19:15 at the latest</strong> — drop any rental car and return it before check-in.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section id="gallery">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">What we'll do &amp; see</span>
+      <h2>The whole trip in pictures</h2>
+      <p>Activities for the kids, then the beaches and landmarks. The family is here to <em>do things</em> — surf, kayak, climb, splash — so those come first.</p>
+    </div>
+
+    <div class="gallery-grid">
+      <!-- ===== Activity-focused (this family loves doing > sightseeing) ===== -->
+      <div class="gallery-item g-wide" style="background-image: url('https://commons.wikimedia.org/wiki/Special:FilePath/Zoomarine_Algarve_26.JPG?width=1400');">
+        <div class="cap"><div class="name">🐬 Zoomarine</div><div class="loc">Day 9 · water slides, wave pool, dolphin show</div></div>
+      </div>
+      <div class="gallery-item gradient-surf">
+        <div class="big-emoji">🏄</div>
+        <div class="cap"><div class="name">Surf school, Sagres</div><div class="loc">Days 5 &amp; 8 · group lesson for all 5</div></div>
+      </div>
+      <div class="gallery-item gradient-kayak" style="background-image: linear-gradient(180deg, rgba(20,184,166,.4), rgba(12,74,110,.85)), url('https://commons.wikimedia.org/wiki/Special:FilePath/Ponta_de_Piedade_(26470591961).jpg?width=900');">
+        <div class="big-emoji">🛶</div>
+        <div class="cap"><div class="name">Kayak the caves</div><div class="loc">Day 7 · Ponta da Piedade</div></div>
+      </div>
+      <div class="gallery-item gradient-ropes">
+        <div class="big-emoji">🌳</div>
+        <div class="cap"><div class="name">Parque Aventura</div><div class="loc">Day 7 · zip lines &amp; rope bridges</div></div>
+      </div>
+      <div class="gallery-item" style="background-image: url('https://commons.wikimedia.org/wiki/Special:FilePath/Snorkeling_Reef.JPG?width=900');">
+        <div class="cap"><div class="name">🤿 Snorkeling</div><div class="loc">Day 2 · Portinho da Arrábida</div></div>
+      </div>
+      <div class="gallery-item gradient-speedboat">
+        <div class="big-emoji">🚤</div>
+        <div class="cap"><div class="name">Speedboat tour</div><div class="loc">Algarve · 360° spins, caves</div></div>
+      </div>
+      <div class="gallery-item" style="background-image: url('https://commons.wikimedia.org/wiki/Special:FilePath/Bottlenose_dolphin_with_young.JPG?width=900');">
+        <div class="cap"><div class="name">🐬 Dolphin watching</div><div class="loc">Day 8 · catamaran · 95% sighting rate</div></div>
+      </div>
+
+      <!-- ===== Landmarks &amp; sights ===== -->
+      <div class="gallery-item g-tall g-wide" style="background-image: url('https://commons.wikimedia.org/wiki/Special:FilePath/Pena_Palace_atop_a_hill_in_the_Sintra_Mountains.jpg?width=1600');">
+        <div class="cap"><div class="name">Pena Palace, Sintra</div><div class="loc">Day 11 · fairy-tale hilltop castle</div></div>
+      </div>
+      <div class="gallery-item" style="background-image: url('https://commons.wikimedia.org/wiki/Special:FilePath/Praia_da_Marinha-Algarve-Portugal.jpg?width=900');">
+        <div class="cap"><div class="name">Seven Hanging Valleys</div><div class="loc">Day 6 · Praia da Marinha</div></div>
+      </div>
+      <div class="gallery-item" style="background-image: url('https://commons.wikimedia.org/wiki/Special:FilePath/Ponta_de_Piedade_(26470591961).jpg?width=900');">
+        <div class="cap"><div class="name">Ponta da Piedade</div><div class="loc">Day 7 · kayak the caves</div></div>
+      </div>
+      <div class="gallery-item g-wide" style="background-image: url('https://commons.wikimedia.org/wiki/Special:FilePath/Belem_Tower,_Lisbon,_Portugal_-_panoramio.jpg?width=1400');">
+        <div class="cap"><div class="name">Tower of Belém</div><div class="loc">Day 12 · Lisbon waterfront</div></div>
+      </div>
+      <div class="gallery-item" style="background-image: url('https://commons.wikimedia.org/wiki/Special:FilePath/Evora_capela_dos_ossos.JPG?width=900');">
+        <div class="cap"><div class="name">Chapel of Bones</div><div class="loc">Day 10 · Évora</div></div>
+      </div>
+      <div class="gallery-item" style="background-image: url('https://commons.wikimedia.org/wiki/Special:FilePath/Lighthouse_of_Cabo_de_S%C3%A3o_Vicente.jpg?width=900');">
+        <div class="cap"><div class="name">Cape St. Vincent</div><div class="loc">Day 5 · SW tip of Europe</div></div>
+      </div>
+      <div class="gallery-item" style="background-image: url('https://commons.wikimedia.org/wiki/Special:FilePath/Serra_da_Arr%C3%A1bida-7.jpg?width=900');">
+        <div class="cap"><div class="name">Serra da Arrábida</div><div class="loc">Day 2 · turquoise coves</div></div>
+      </div>
+      <div class="gallery-item" style="background-image: url('https://commons.wikimedia.org/wiki/Special:FilePath/Templo-Evora_1.JPG?width=900');">
+        <div class="cap"><div class="name">Templo Romano</div><div class="loc">Day 10 · Évora</div></div>
+      </div>
+      <div class="gallery-item g-wide" style="background-image: url('https://commons.wikimedia.org/wiki/Special:FilePath/Mosteiro_dos_Geronimos_2.JPG?width=1400');">
+        <div class="cap"><div class="name">Jerónimos Monastery</div><div class="loc">Day 12 · Belém</div></div>
+      </div>
+      <div class="gallery-item" style="background-image: url('https://commons.wikimedia.org/wiki/Special:FilePath/Vista_de_Lisboa.jpg?width=900');">
+        <div class="cap"><div class="name">Lisbon rooftops</div><div class="loc">Day 12 · Alfama &amp; Tagus views</div></div>
+      </div>
+      <div class="gallery-item" style="background-image: url('https://commons.wikimedia.org/wiki/Special:FilePath/Praia_da_Dona_Ana_-_Lagos_02.JPG?width=900');">
+        <div class="cap"><div class="name">Praia Dona Ana</div><div class="loc">Day 4 · first Algarve swim</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACTIVITIES ============ -->
+<section id="activities">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">Everything we're doing</span>
+      <h2>Activities &amp; adventures</h2>
+      <p>The full menu — surf school, hikes, kayak tours, theme parks, castles. Everything kid-tested for ages 10, 14, and 17.</p>
+    </div>
+
+    <div class="act-tabs">
+      <button class="act-tab active" data-cat="all">All</button>
+      <button class="act-tab" data-cat="nature">Nature &amp; Hiking</button>
+      <button class="act-tab" data-cat="adventure">Adventure</button>
+      <button class="act-tab" data-cat="surf">Surf &amp; Water</button>
+      <button class="act-tab" data-cat="culture">Culture</button>
+    </div>
+
+    <div class="act-grid">
+
+      <div class="act-card nature" data-cat="nature">
+        <div class="icon">🥾</div>
+        <h4>Serra da Arrábida coastal trail</h4>
+        <div class="meta">Easy–moderate · 5–8 km · 2–3 hrs</div>
+        <p class="desc">Ridge walk with Atlantic panoramas dropping to hidden coves. Start before 9am; finish at the beach.</p>
+
+          <a class="provider" href="https://www.icnf.pt/api/file/doc/89c89ed7c0e74a2c" target="_blank" rel="noopener">Park info</a>
+              </div>
+
+      <div class="act-card nature" data-cat="nature">
+        <div class="icon">⭐</div>
+        <h4>Seven Hanging Valleys Trail <span class="star">⭐</span></h4>
+        <div class="meta">Moderate · 12 km · 3.5–4.5 hrs</div>
+        <p class="desc">One of Europe's best coastal hikes. Ochre cliffs, sea caves, Benagil viewpoint. Arrange a taxi back.</p>
+
+          <a class="provider" href="https://www.visitalgarve.pt/en/menu/261/walking-and-cycling-routes-in-the-algarve.aspx" target="_blank" rel="noopener">Trail info</a>
+              </div>
+
+      <div class="act-card nature" data-cat="nature">
+        <div class="icon">🌬️</div>
+        <h4>Cape St. Vincent</h4>
+        <div class="meta">Easy walk · 1 hr</div>
+        <p class="desc">The southwestern tip of Europe. Dramatic cliffs and a lighthouse. Very windy — bring a layer.</p>
+
+          <a class="provider" href="https://www.monumentosdoalgarve.pt/en/monuments/cape-saint-vincent-lighthouse" target="_blank" rel="noopener">Site info</a>
+              </div>
+
+      <div class="act-card nature" data-cat="nature">
+        <div class="icon">⛰️</div>
+        <h4>Vila Sassetti → Moorish Castle</h4>
+        <div class="meta">Moderate · 4 km · 1.5–2 hrs</div>
+        <p class="desc">Shaded forest trail up to the castle from Sintra town. Skip the shuttle crowds.</p>
+
+          <a class="provider" href="https://www.parquesdesintra.pt/en/parks-and-monuments/castle-of-the-moors/" target="_blank" rel="noopener">Castle info</a>
+              </div>
+
+      <div class="act-card adventure" data-cat="adventure">
+        <div class="icon">🛶</div>
+        <h4>Ponta da Piedade kayak tour <span class="star">⭐</span></h4>
+        <div class="meta">2 hrs · Lagos marina</div>
+        <p class="desc">Sea caves and rock arches from the water. Best light in the morning. Book 2–3 days ahead.</p>
+
+          <a class="provider" href="https://lagosadventurecenter.com/tour/kayak-tour-ponta-da-piedade/" target="_blank" rel="noopener">Book kayak tour</a>
+              </div>
+
+      <div class="act-card adventure" data-cat="adventure">
+        <div class="icon">🌳</div>
+        <h4>Parque Aventura Lagos <span class="star">⭐</span></h4>
+        <div class="meta">2–3 hrs · All ages</div>
+        <p class="desc">Zip lines, rope bridges, treetop circuits. Multiple difficulty levels — every kid has their own challenge.</p>
+
+          <a class="provider" href="https://parqueaventura.net/en/" target="_blank" rel="noopener">Book Parque Aventura</a>
+              </div>
+
+      <div class="act-card adventure" data-cat="adventure">
+        <div class="icon">🐬</div>
+        <h4>Zoomarine</h4>
+        <div class="meta">Full morning · Near Albufeira</div>
+        <p class="desc">Water slides, marine shows, Jurassic River rapids. Arrive at opening (9am) before the crowds.</p>
+
+          <a class="provider" href="https://www.zoomarine.pt/en/" target="_blank" rel="noopener">Book Zoomarine</a>
+              </div>
+
+      <div class="act-card adventure" data-cat="adventure">
+        <div class="icon">🐬</div>
+        <h4>Dolphin watching catamaran</h4>
+        <div class="meta">1.5 hrs · Lagos marina</div>
+        <p class="desc">95% sighting rate. Book a day ahead.</p>
+
+          <a class="provider" href="https://bomdia.eu/dolphin-watching/" target="_blank" rel="noopener">Book dolphin trip</a>
+              </div>
+
+      <div class="act-card adventure" data-cat="adventure">
+        <div class="icon">🚤</div>
+        <h4>Speedboat tour</h4>
+        <div class="meta">1–1.5 hrs · Albufeira marina</div>
+        <p class="desc">360° spins, high-speed coastal run. Combine with the Zoomarine day.</p>
+
+          <a class="provider" href="https://www.dreamwavealgarve.com/en/tours/algarve-coast-cruise-and-benagil-caves" target="_blank" rel="noopener">Book speedboat</a>
+              </div>
+
+      <div class="act-card surf" data-cat="surf">
+        <div class="icon">🏄</div>
+        <h4>Surf lesson — Sagres (Day 5)</h4>
+        <div class="meta">2–3 hrs · Praia do Tonel / Mareta</div>
+        <p class="desc">Group lesson for all 5. Sagres Surf School or Algarve Surf School. Book 1+ week ahead.</p>
+
+          <a class="provider" href="https://www.sagressurfculture.com" target="_blank" rel="noopener">Book surf school</a>
+              </div>
+
+      <div class="act-card surf" data-cat="surf">
+        <div class="icon">🌊</div>
+        <h4>Surf session — Day 8</h4>
+        <div class="meta">Half day · Sagres</div>
+        <p class="desc">Rent boards and paddle out with what you learned, or book a second lesson.</p>
+
+          <a class="provider" href="https://www.algarvesurfschool.com" target="_blank" rel="noopener">Book surf rental</a>
+              </div>
+
+      <div class="act-card surf" data-cat="surf">
+        <div class="icon">🤿</div>
+        <h4>Snorkeling — Portinho da Arrábida</h4>
+        <div class="meta">A few hours · Day 2</div>
+        <p class="desc">Turquoise water, limestone backdrop. The best snorkeling on the Arrábida coast.</p>
+
+          <a class="provider" href="https://www.vertigemazul.com/en/tours/" target="_blank" rel="noopener">Book Arrábida boat</a>
+              </div>
+
+      <div class="act-card culture" data-cat="culture">
+        <div class="icon">🏰</div>
+        <h4>Pena Palace, Sintra</h4>
+        <div class="meta">Half day · Day 11</div>
+        <p class="desc">Colorful Romanticist palace on the hilltop. Pre-book entry at sintra.pt — sells out in August.</p>
+
+          <a class="provider" href="https://www.parquesdesintra.pt/en/parks-and-monuments/park-and-palace-of-pena/" target="_blank" rel="noopener">Book Pena tickets</a>
+              </div>
+
+      <div class="act-card culture" data-cat="culture">
+        <div class="icon">💀</div>
+        <h4>Chapel of Bones, Évora</h4>
+        <div class="meta">~1 hr · Day 10</div>
+        <p class="desc">Interior walls lined with the skulls and bones of ~5,000 monks. Unforgettable for the kids.</p>
+
+          <a class="provider" href="https://igrejadesaofrancisco.pt/" target="_blank" rel="noopener">Site info</a>
+              </div>
+
+      <div class="act-card culture" data-cat="culture">
+        <div class="icon">⛪</div>
+        <h4>Jerónimos Monastery</h4>
+        <div class="meta">1–2 hrs · Day 12 · Belém</div>
+        <p class="desc">UNESCO World Heritage site. Manueline-style architecture. Vasco da Gama is buried inside.</p>
+
+          <a class="provider" href="https://www.patrimoniocultural.gov.pt/en/museus-e-monumentos/rede-portuguesa/m/mosteiro-dos-jeronimos/" target="_blank" rel="noopener">Site info</a>
+              </div>
+
+      <div class="act-card culture" data-cat="culture">
+        <div class="icon">🚋</div>
+        <h4>Tram 28</h4>
+        <div class="meta">~45 min · Day 12 · Lisbon</div>
+        <p class="desc">Classic yellow tram through Alfama, Graça, and Estrela. Board early to get a seat.</p>
+
+          <a class="provider" href="https://www.carris.pt/en/timetables-and-itineraries/?network=Surface&search=28E" target="_blank" rel="noopener">Carris route info</a>
+              </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ BOOKINGS ============ -->
+<section id="bookings">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">Don't forget</span>
+      <h2>What to book before we go</h2>
+      <p>August is peak season. Most of these sell out — book in the order below.</p>
+    </div>
+
+    <div class="checklist">
+
+      <div class="check-item">
+        <div class="box" data-id="car"></div>
+        <div class="what">
+          <div class="title">Rental car · SUV or minivan</div>
+          <div class="sub">Seats 5 with luggage. Pick up at LIS airport on Jul 30 (~21:30). Get a Via Verde transponder at the desk.</div>
+        </div>
+        <div class="urgency high">Book ASAP</div>
+      </div>
+
+      <div class="check-item">
+        <div class="box" data-id="pena"></div>
+        <div class="what">
+          <div class="title">Pena Palace, Sintra · sintra.pt</div>
+          <div class="sub">Pre-book entry for Sunday Aug 9. Sells out in August. Pick a morning slot.</div>
+        </div>
+        <div class="urgency high">Weeks ahead</div>
+      </div>
+
+      <div class="check-item">
+        <div class="box" data-id="surf"></div>
+        <div class="what">
+          <div class="title">Surf school · Sagres</div>
+          <div class="sub">Group lesson for 5 (mixed ages 10/14/17 + adults) on Mon Aug 3. Sagres Surf School or Algarve Surf School.</div>
+        </div>
+        <div class="urgency high">1+ week ahead</div>
+      </div>
+
+      <div class="check-item">
+        <div class="box" data-id="kayak"></div>
+        <div class="what">
+          <div class="title">Ponta da Piedade kayak tour</div>
+          <div class="sub">2-hr morning tour from Lagos marina on Wed Aug 5. Morning slots sell out first.</div>
+        </div>
+        <div class="urgency med">2–3 days ahead</div>
+      </div>
+
+      <div class="check-item">
+        <div class="box" data-id="parque"></div>
+        <div class="what">
+          <div class="title">Parque Aventura Lagos · parqueaventura.pt</div>
+          <div class="sub">Afternoon slot on Wed Aug 5 — cooler and shadier.</div>
+        </div>
+        <div class="urgency med">Online in advance</div>
+      </div>
+
+      <div class="check-item">
+        <div class="box" data-id="zoo"></div>
+        <div class="what">
+          <div class="title">Zoomarine</div>
+          <div class="sub">Fri Aug 7. Buy online for discount + skip queues. Park opens at 9am.</div>
+        </div>
+        <div class="urgency med">A few days ahead</div>
+      </div>
+
+      <div class="check-item">
+        <div class="box" data-id="taxi"></div>
+        <div class="what">
+          <div class="title">Seven Hanging Valleys return taxi</div>
+          <div class="sub">Taxi from Praia da Senhora da Rocha back to Lagos on Tue Aug 4. Arrange the day before.</div>
+        </div>
+        <div class="urgency low">1 day ahead</div>
+      </div>
+
+      <div class="check-item">
+        <div class="box" data-id="dolphin"></div>
+        <div class="what">
+          <div class="title">Dolphin catamaran</div>
+          <div class="sub">From Lagos marina, Thu Aug 6. Book 1–2 days ahead.</div>
+        </div>
+        <div class="urgency low">1–2 days ahead</div>
+      </div>
+
+      <div class="check-item">
+        <div class="box" data-id="late1"></div>
+        <div class="what">
+          <div class="title">Confirm late check-in at Pousada Castelo</div>
+          <div class="sub">Arriving around midnight on Jul 30. Email or call ahead.</div>
+        </div>
+        <div class="urgency med">Before departure</div>
+      </div>
+
+      <div class="check-item">
+        <div class="box" data-id="late2"></div>
+        <div class="what">
+          <div class="title">Confirm late check-in at O Conventinho</div>
+          <div class="sub">Arriving late afternoon Aug 7 after Zoomarine. Email to confirm.</div>
+        </div>
+        <div class="urgency low">Before departure</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRACTICAL ============ -->
+<section id="practical">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">Good to know</span>
+      <h2>Practical info</h2>
+      <p>Tolls, weather, emergency numbers, and the small stuff that's easy to forget.</p>
+    </div>
+
+    <div class="prac-grid">
+      <div class="prac-card">
+        <div class="icon">🚗</div>
+        <h4>Tolls</h4>
+        <p>Lisbon ↔ Algarve route is tolled. Get a <strong>Via Verde transponder</strong> at the rental desk or pay online at portugaltolls.com within 5 days.</p>
+      </div>
+
+      <div class="prac-card">
+        <div class="icon">☀️</div>
+        <h4>Weather</h4>
+        <p>Algarve in August: <strong>28–35°C, essentially no rain.</strong> Start all hikes before 8am. Hats and sunscreen are essential.</p>
+      </div>
+
+      <div class="prac-card">
+        <div class="icon">💳</div>
+        <h4>Cash</h4>
+        <p>Portugal is very card-friendly. <strong>€100–150 cash</strong> is enough for the whole trip — for tips, small markets, parking machines.</p>
+      </div>
+
+      <div class="prac-card">
+        <div class="icon">🗣️</div>
+        <h4>Language</h4>
+        <p>Portuguese. English is very widely spoken in tourist areas. "Obrigado/a" (thank you) goes a long way.</p>
+      </div>
+
+      <div class="prac-card">
+        <div class="icon">🚨</div>
+        <h4>Emergency (EU)</h4>
+        <p>Dial <strong>112</strong> from any phone for police, fire, or ambulance. Works across all of Portugal.</p>
+        <div class="num">112</div>
+      </div>
+
+      <div class="prac-card">
+        <div class="icon">🇮🇱</div>
+        <h4>Israeli Embassy, Lisbon</h4>
+        <p>For passport issues, emergencies, or replacement documents.</p>
+        <div class="num">+351 213 101 500</div>
+      </div>
+
+      <div class="prac-card">
+        <div class="icon">🏖️</div>
+        <h4>Comporta beach access</h4>
+        <p>Some Comporta/Tróia beaches require permits to drive to. Check access rules before arrival.</p>
+      </div>
+
+      <div class="prac-card">
+        <div class="icon">🅿️</div>
+        <h4>Lisbon parking</h4>
+        <p>Drop the rental car <strong>before</strong> entering central Lisbon. Parking is expensive and stressful. Use Uber/metro instead.</p>
+      </div>
+
+    </div>
+
+    <div class="nightlife">
+      <h3>🌙 Nightlife &amp; evenings by base</h3>
+      <div class="nightlife-grid">
+        <div class="nl-item">
+          <div class="name">Lagos</div>
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <div class="note">Best on the route. Praça Gil Eanes &amp; Rua 25 de Abril packed every night.</div>
+        </div>
+        <div class="nl-item">
+          <div class="name">Lisbon</div>
+          <div class="stars">⭐⭐⭐⭐</div>
+          <div class="note">Biggest, most varied — Bairro Alto, Alfama, Cais do Sodré. Spread out.</div>
+        </div>
+        <div class="nl-item">
+          <div class="name">Évora</div>
+          <div class="stars">⭐⭐</div>
+          <div class="note">Good restaurants but quiet by 10pm.</div>
+        </div>
+        <div class="nl-item">
+          <div class="name">Sagres</div>
+          <div class="stars">⭐</div>
+          <div class="note">Surfer crowd. A few bars, quiets down early.</div>
+        </div>
+        <div class="nl-item">
+          <div class="name">Comporta</div>
+          <div class="stars">⭐</div>
+          <div class="note">Deliberately quiet. Great for adults, minimal teen action.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div>
+      <h4>The Rozen family · Portugal '26</h4>
+      <p>July 30 – August 10, 2026<br/>Tel Aviv → Lisbon and back. 12 days, 4 hotels, ~720 km, five Rozens, zero regrets.</p>
+      <p class="signature">Boa viagem! 🇵🇹</p>
+    </div>
+    <div>
+      <h4>Quick links</h4>
+      <p>
+        <a href="#flights">Flights</a><br/>
+        <a href="#hotels">Hotels</a><br/>
+        <a href="#itinerary">Day-by-day</a><br/>
+        <a href="#bookings">Booking checklist</a>
+      </p>
+    </div>
+    <div>
+      <h4>Emergencies</h4>
+      <p>
+        EU emergency: <strong>112</strong><br/>
+        Israeli Embassy:<br/>
+        <strong>+351 213 101 500</strong><br/>
+        El Al booking: <strong>Z8UI4Z</strong>
+      </p>
+    </div>
+  </div>
+  <div class="bottom">
+    Built for the Rozen family · Last updated May 2026
+  </div>
+</footer>
+
+<script>
+  // Activity tab filter
+  document.querySelectorAll('.act-tab').forEach(t => {
+    t.addEventListener('click', () => {
+      document.querySelectorAll('.act-tab').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      const cat = t.getAttribute('data-cat');
+      document.querySelectorAll('.act-card').forEach(c => {
+        c.style.display = (cat === 'all' || c.getAttribute('data-cat') === cat) ? '' : 'none';
+      });
+    });
+  });
+
+  // Checklist persistence
+  const STORE = 'rozen-portugal-checklist';
+  let state = {};
+  try { state = JSON.parse(localStorage.getItem(STORE) || '{}'); } catch(e){}
+  document.querySelectorAll('.check-item .box').forEach(b => {
+    const id = b.getAttribute('data-id');
+    if (state[id]) b.classList.add('checked');
+    b.addEventListener('click', () => {
+      b.classList.toggle('checked');
+      state[id] = b.classList.contains('checked');
+      try { localStorage.setItem(STORE, JSON.stringify(state)); } catch(e){}
+    });
+  });
+
+  // Hotel thumbnail click → swap main photo
+  document.querySelectorAll('.hotel').forEach(hotel => {
+    const main = hotel.querySelector('.photo');
+    const thumbs = hotel.querySelectorAll('.thumb');
+    thumbs.forEach(t => {
+      t.addEventListener('click', () => {
+        const src = t.getAttribute('data-src');
+        if (!src) return;
+        main.style.backgroundImage = `url('${src}')`;
+        thumbs.forEach(x => x.classList.remove('active'));
+        t.classList.add('active');
+      });
+    });
+  });
+
+  // Smooth nav highlight (optional)
+  const navLinks = document.querySelectorAll('nav.top a');
+  navLinks.forEach(a => a.addEventListener('click', e => {
+    // default smooth scroll already enabled via CSS html { scroll-behavior: smooth }
+  }));
+
+  // Ensure every external link opens in a new tab (and never navigates this one).
+  document.querySelectorAll('a[href^="http"]').forEach(a => {
+    a.setAttribute('target', '_blank');
+    a.setAttribute('rel', 'noopener noreferrer');
+  });
+
+  // ===== Stops map (Leaflet) =====
+  const STOPS = [
+    { n: 1, name: 'Alcácer do Sal & Comporta', sub: '3 nights · Jul 30 – Aug 2 · Pousada Castelo', coords: [38.3720, -8.5123] },
+    { n: 2, name: 'Lagos & Sagres, Algarve',    sub: '5 nights · Aug 2 – Aug 7 · Cascade Wellness', coords: [37.0968, -8.6903] },
+    { n: 3, name: 'Évora',                       sub: '1 night · Aug 7 – Aug 8 · O Conventinho',     coords: [38.5713, -7.9135] },
+    { n: 4, name: 'Lisbon',                      sub: '2 nights · Aug 8 – Aug 10 · Mama Shelter',    coords: [38.7223, -9.1393] }
+  ];
+  const LIS_AIRPORT = { name: 'Lisbon Airport (LIS)', coords: [38.7742, -9.1342] };
+
+  if (window.L) {
+    const map = L.map('leaflet-map', { scrollWheelZoom: false });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    function pinIcon(label) {
+      return L.divIcon({
+        className: 'stop-pin',
+        html: '<div style="width:34px;height:34px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);'
+            + 'background:linear-gradient(135deg,#1d4ed8,#1e3a8a);box-shadow:0 3px 8px rgba(0,0,0,.35);'
+            + 'display:flex;align-items:center;justify-content:center;border:2px solid #fff;">'
+            + '<span style="transform:rotate(45deg);color:#fff;font-family:Fraunces,serif;font-weight:700;font-size:15px;">'
+            + label + '</span></div>',
+        iconSize: [34, 34],
+        iconAnchor: [17, 34],
+        popupAnchor: [0, -34]
+      });
+    }
+
+    const markers = [];
+    STOPS.forEach(s => {
+      const m = L.marker(s.coords, { icon: pinIcon(s.n) }).addTo(map)
+        .bindPopup('<div class="pop-name">' + s.n + '. ' + s.name + '</div><div class="pop-sub">' + s.sub + '</div>');
+      markers.push(m);
+    });
+
+    // Airport marker (small)
+    L.circleMarker(LIS_AIRPORT.coords, {
+      radius: 6, color: '#c2410c', fillColor: '#fb923c', fillOpacity: 1, weight: 2
+    }).addTo(map).bindPopup('<div class="pop-name">✈ ' + LIS_AIRPORT.name + '</div><div class="pop-sub">Arrive & depart</div>');
+
+    // Driving route line: airport → stops → back to Lisbon
+    const routeLine = [
+      LIS_AIRPORT.coords,
+      STOPS[0].coords, STOPS[1].coords, STOPS[2].coords, STOPS[3].coords
+    ];
+    L.polyline(routeLine, { color: '#c2410c', weight: 3, opacity: .75, dashArray: '8 8' }).addTo(map);
+
+    // Fit bounds to everything
+    const allPts = routeLine.concat([LIS_AIRPORT.coords]);
+    map.fitBounds(L.latLngBounds(allPts).pad(0.15));
+
+    // Build legend cards
+    const legend = document.getElementById('map-legend');
+    STOPS.forEach((s, i) => {
+      const div = document.createElement('div');
+      div.className = 'leg';
+      div.innerHTML = '<div class="pin">' + s.n + '</div>'
+        + '<div class="info"><div class="name">' + s.name + '</div>'
+        + '<div class="sub">' + s.sub + '</div></div>';
+      div.addEventListener('click', () => {
+        map.setView(s.coords, 11, { animate: true });
+        markers[i].openPopup();
+      });
+      legend.appendChild(div);
+    });
+
+    // Ensure proper sizing once the section becomes visible
+    setTimeout(() => map.invalidateSize(), 200);
+  }
+</script>
+
+</body>
+</html>
